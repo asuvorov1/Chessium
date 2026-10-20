@@ -5,7 +5,8 @@
 
 ## Установка
 Скачайте `Chessium-Setup-x.y.z.exe` со страницы [Releases](https://github.com/asuvorov1/Chessium/releases) и запустите его.
-Права администратора не нужны. Есть и portable-версия: архив `Chessium-x.y.z-portable.zip`, распакуйте и запустите `Chessium.exe`.
+Установщик предложит выбрать папку и создать ярлык на рабочем столе. Права администратора не нужны.
+Удалить программу можно через «Параметры → Приложения». Есть и portable-версия: архив `Chessium-x.y.z-portable.zip`, распакуйте и запустите `Chessium.exe`.
 
 Требования: Windows 10 (2004+) или 11, x64, интернет.
 
@@ -55,8 +56,9 @@ powershell -ExecutionPolicy Bypass -File build.ps1
 | `ui.py` | виджеты интерфейса |
 
 ## Сторонние материалы
-- Изображения фигур chess.com и lichess **не входят** в репозиторий и установщик:
-  программа скачивает их при первом запуске для локального распознавания.
+- Изображения фигур chess.com и lichess не хранятся в репозитории. `build.ps1` скачивает их при сборке
+  и вкладывает в программу, где они используются как шаблоны для распознавания
+  (некоммерческое использование). Если программа запущена из исходников, наборы скачиваются при первом запуске.
   Встроенный набор cburnett взят из [python-chess](https://github.com/niklasf/python-chess).
 - База дебютов — [lichess-org/chess-openings](https://github.com/lichess-org/chess-openings) (CC0).
 - Анализ — [chess-api.com](https://chess-api.com) (Stockfish).

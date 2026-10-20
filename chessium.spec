@@ -1,5 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 # Сборка: pyinstaller chessium.spec  (или build.ps1)
+import os
 import re
 
 version = re.search(r'__version__ = "(.+?)"', open("version.py", encoding="utf-8").read()).group(1)
@@ -25,10 +26,14 @@ VSVersionInfo(
 with open("build/version_info.txt", "w", encoding="utf-8") as f:
     f.write(version_info)
 
+datas = [("assets/icon.ico", "assets"), ("assets/icon.png", "assets"), ("openings.tsv", ".")]
+if os.path.isdir("build/pieces"):  # наборы фигур скачивает build.ps1
+    datas.append(("build/pieces", "pieces"))
+
 a = Analysis(
     ["app.py"],
     pathex=[],
-    datas=[("assets/icon.ico", "assets"), ("assets/icon.png", "assets"), ("openings.tsv", ".")],
+    datas=datas,
     hiddenimports=["websocket", "PyQt6.QtSvg"],
     excludes=["tkinter", "PyQt6.QtWebEngineCore", "PyQt6.QtQml", "PyQt6.QtQuick", "PyQt6.QtMultimedia",
               "PyQt6.QtNetwork", "PyQt6.QtPdf", "PyQt6.Qt3DCore", "matplotlib", "scipy", "pandas"],

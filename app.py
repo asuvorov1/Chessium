@@ -497,7 +497,9 @@ class MainWindow(QWidget):
                 self.tracker.openings = load_openings(APP_DIR / "openings.tsv", DATA_DIR / "openings.json")
             except Exception:
                 log.exception("Не удалось загрузить дебюты")
-            pieces_dir = DATA_DIR / "pieces"
+            pieces_dir = APP_DIR / "pieces"  # наборы, вложенные в установщик
+            if not pieces_dir.is_dir():
+                pieces_dir = DATA_DIR / "pieces"
             if not (pieces_dir / ".complete").exists():
                 self.bridge.progress.emit("Первый запуск: загружаю наборы фигур…")
                 pieceset.download_piece_sets(pieces_dir)

@@ -7,6 +7,11 @@ Write-Host "Chessium $version"
 
 python -m pip install -q -r requirements.txt pyinstaller
 New-Item -ItemType Directory -Force build | Out-Null
+
+# Piece sets are bundled into the build (they are not stored in git)
+python -c "from pathlib import Path; import pieceset; d = Path('build/pieces'); pieceset.download_piece_sets(d); n = sum(1 for x in d.iterdir() if x.is_dir() and len(list(x.glob('*.*'))) == 12); print('piece sets:', n); (d / '.complete').touch() if n >= 11 else exit('piece download incomplete')"
+if ($LASTEXITCODE -ne 0) { throw "Piece download failed" }
+python tools/make_installer_art.py
 python -m PyInstaller --noconfirm --clean chessium.spec
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller failed" }
 
